@@ -5,10 +5,13 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import bg3 from '../images/bg3.jpg'
 import sky from '../images/sky.jpg'
 import {useNavigate} from 'react-router-dom';
+import * as YUKA from 'yuka';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 function Setup(){
     // Setup
     const canvasRef = useRef(null);
     const navigate = useNavigate();
+    
 
     useEffect(() =>{
         if (!canvasRef.current) return;
@@ -50,6 +53,71 @@ function Setup(){
         box.position.y = 10;
         scene.add(box);
 
+        //Loading ship
+
+        // const loader = new GLTFLoader();
+        // loader.load('./assets/SUV.glb', function(glb){
+        //     scene.add( glb.scene );
+        //     const model = glb.scene;
+        //     model.scale.set(0.5,0.5,0.5);
+        //     scene.add(model);
+        // });
+    
+        //YUKA
+        const shipGeometry = new THREE.ConeGeometry(1,0.5,8);
+        shipGeometry.rotateX(Math.PI * 0.5);
+        const shipMaterial = new THREE.MeshNormalMaterial();
+        const shipMesh = new THREE.Mesh(shipGeometry, shipMaterial);
+        shipMesh.matrixAutoUpdate = false;
+        scene.add(shipMesh);
+
+        const ship = new YUKA.Vehicle();
+        ship.setRenderComponent(shipMesh, sync);
+
+        function sync(entity, rendererComponent){
+            rendererComponent.matrix.copy(entity.worldMatrix); //mesh copies all matrix calculation needed for geomtry transformations (make YUKA handle instead of THREE.js)
+        }
+
+        //create path for entity
+        const path = new YUKA.Path();
+        path.add(new YUKA.Vector3(-6, 0, 4));
+        path.add(new YUKA.Vector3(-2, 0, -4));
+        path.add(new YUKA.Vector3(8, 0, 4));
+
+        path.loop = true; //enable the ship to continue looping over the path 
+
+        ship.position.copy(path.current());//put ship at first checkpoint
+
+        //Set behaviour
+        const followPathBehavior = new YUKA.FollowPathBehavior(path, 0.5);
+        ship.steering.add(followPathBehavior);
+
+        ship.maxSpeed = 3;
+
+        const onPathBehavior = new YUKA.OnPathBehavior(path);
+        onPathBehavior.radius = 0.5;
+        ship.steering.add(onPathBehavior);
+
+        const entityManager = new YUKA.EntityManager();
+        entityManager.add(ship);
+
+        const time = new YUKA.Time();
+
+
+        //Make Path visisble
+        const position = [];
+        for(let i = 0; i < path._waypoints.length; i++){
+            const waypoint = path._waypoints[i];
+            position.push(waypoint.x, waypoint.y, waypoint.z);
+        }
+
+        const lineGeometry = new THREE.BufferGeometry();
+        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(position, 3));
+
+        const lineMaterial = new THREE.LineBasicMaterial({color: 0xFFFFFF});
+        const lines = new THREE.LineLoop(lineGeometry, lineMaterial);
+        scene.add(lines);
+
         //label Renderer container
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -60,7 +128,7 @@ function Setup(){
 
         //Create Spheres
         function createSphere(name, x,y,z){
-            const geo = new THREE.SphereBufferGeometry(1);
+            const geo = new THREE.SphereGeometry(1);
             const mat = new THREE.MeshBasicMaterial({color: 0xFF0000});
             const mesh = new THREE.Mesh(geo,mat);
             mesh.position.set(x,y,z);
@@ -175,7 +243,8 @@ function Setup(){
         // Animation Loop
         const animate = () =>{
             requestAnimationFrame(animate);
-
+            const delta = time.update().getDelta();
+            entityManager.update(delta);
             labelRenderer.render(scene,camera);
             //controls.update();
             renderer.render(scene, camera);
