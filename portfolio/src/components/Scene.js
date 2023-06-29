@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import * as THREE from 'three';
 import {CSS2DRenderer, CSS2DObject} from "three/examples/jsm/renderers/CSS2DRenderer"
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
@@ -7,117 +7,172 @@ import sky from '../images/sky.jpg'
 import {useNavigate} from 'react-router-dom';
 import * as YUKA from 'yuka';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
-function Setup(){
+function Scene(){
     // Setup
     const canvasRef = useRef(null);
     const navigate = useNavigate();
-    
 
+    const [model, setModel] = useState(null);
+    const [scene, setScene] = useState(null);
+    const [camera, setCamera] = useState(null);
+    const [renderer, setRenderer] = useState(null);
+    const [box, setBox] = useState(null);
+
+    //Load Scene,camera, renderer and objects
     useEffect(() =>{
         if (!canvasRef.current) return;
+        console.log("setScene");
+        const newScene = new THREE.Scene();
+        const newCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const newRenderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
+
+        newRenderer.setPixelRatio(window.devicePixelRatio);
+        newRenderer.setSize(window.innerWidth, window.innerHeight);
         
-        //setup scene, camera, renderer
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
+        newCamera.position.setZ(50);
+        newCamera.position.setX(10);
+        newCamera.position.setY(0);
+
+        //loadObjects();
+
+        newRenderer.render(newScene, newCamera);
+        newRenderer.setClearColor(0xffffff);
+
+        setScene(newScene);
+        setCamera(newCamera);
+        setRenderer(newRenderer);
         
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        
-        camera.position.setZ(50);
-        camera.position.setX(10);
-        camera.position.setY(0);
+        return ()=> {
+            // newRenderer.dispose();
+            // if(box && scene && camera){
+            //     scene.remove(box);
+            //     scene.remove(camera);
+            // }
+            // if (scene) {
+            //     scene.traverse((object) => {
+            //       if (object.isMesh) {
+            //         object.geometry.dispose();
+            //         object.material.dispose();
+            //       }
+            //     });
+            // }
+        }
+    }, []);
 
-        renderer.render(scene, camera);
-        renderer.setClearColor(0xffffff);
+    useEffect(()=>{
+        const loadObjects = () => {
+            if(scene){
+                console.log("set objects");
+                
+    
+                // // Background
+                // const spaceTexture = new THREE.TextureLoader().load(bg3);
+                // scene.background = spaceTexture;
+    
+                // Lights
+                const pointLight = new THREE.PointLight(0xffffff);
+                pointLight.position.set(5, 5, 5);
+    
+                const ambientLight = new THREE.AmbientLight(0xffffff);
+                scene.add(pointLight, ambientLight); //--------------
+    
+                //Box
+                const boxTexture = new THREE.TextureLoader().load(sky);
+                const newBox = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: boxTexture }));
+                newBox.position.z = -15;
+                newBox.position.y = 10;
+                setBox(newBox);
+                if(box){
+                    scene.add(box);
+                }
+                
+                
+            }
+        }
+        loadObjects();//s
 
-        // // Background
-        // const spaceTexture = new THREE.TextureLoader().load(bg3);
-        // scene.background = spaceTexture;
+    }, [scene]);
+    
+ 
 
-        // Lights
-        const pointLight = new THREE.PointLight(0xffffff);
-        pointLight.position.set(5, 5, 5);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff);
-        scene.add(pointLight, ambientLight);
+    useEffect(() =>{
+        if(!(renderer || scene || camera)) return;
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.update();
 
+        // //SHIP
+        // const ship = new YUKA.Vehicle();
+                
+        // function sync(entity, rendererComponent){
+        //     rendererComponent.matrix.copy(entity.worldMatrix); //mesh copies all matrix calculation needed for geomtry transformations (make YUKA handle instead of THREE.js)
+        // }
 
-        //Box
-        const boxTexture = new THREE.TextureLoader().load(sky);
-        const box = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: boxTexture }));
-        box.position.z = -15;
-        box.position.y = 10;
-        scene.add(box);
+        // //create path for entity
+        // const path = new YUKA.Path();
+        // path.add(new YUKA.Vector3(-6, 0, 4));
+        // path.add(new YUKA.Vector3(-2, 0, -4));
+        // path.add(new YUKA.Vector3(8, 0, 4));
 
-        //Loading ship
+        // path.loop = true; //enable the ship to continue looping over the path 
 
-        const loader = new GLTFLoader();
-        loader.load('./assets/rocket.glb', function(glb){
-            scene.add( glb.scene );
-            const model = glb.scene;
-            model.scale.set(0.5,0.5,0.5);
-            scene.add(model);
-        });
+        // ship.position.copy(path.current());//put ship at first checkpoint
+
+        // const loader = new GLTFLoader();
+        // loader.load('./assets/rocket.glb', function(glb){
+        //     scene.add( glb.scene );
+        //     const model = glb.scene;
+
+        //     setModel(model);
+        //     scene.add(model);
+        //     model.matrixAutoUpdate = false;
+        //     //ship.scale = new YUKA.Vector3(0.5,0.5,0.5);
+        //     ship.setRenderComponent(model, sync);
+        // });
+
+        // //Set behaviour
+        // const followPathBehavior = new YUKA.FollowPathBehavior(path, 3);
+        // ship.steering.add(followPathBehavior);
+
+        // ship.maxSpeed = 3;
+
+        // const onPathBehavior = new YUKA.OnPathBehavior(path);
+        // onPathBehavior.radius = 0.5;
+        // ship.steering.add(onPathBehavior);
+
+        // const entityManager = new YUKA.EntityManager();
+        // entityManager.add(ship);
+
+        // //Make Path visisble
+        // const position = [];
+        // for(let i = 0; i < path._waypoints.length; i++){
+        //     const waypoint = path._waypoints[i];
+        //     position.push(waypoint.x, waypoint.y, waypoint.z);
+        // }
+
+        // const lineGeometry = new THREE.BufferGeometry();
+        // lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(position, 3));
+
+        // const lineMaterial = new THREE.LineBasicMaterial({color: 0x000000F});
+        // const lines = new THREE.LineLoop(lineGeometry, lineMaterial);
+        // scene.add(lines);
+
+        // //renderer.render(scene, camera); //need to change this
+
+
+        
     
         //YUKA
-        const shipGeometry = new THREE.ConeGeometry(1,0.5,8);
-        shipGeometry.rotateX(Math.PI * 0.5);
-        const shipMaterial = new THREE.MeshNormalMaterial();
-        const shipMesh = new THREE.Mesh(shipGeometry, shipMaterial);
-        shipMesh.matrixAutoUpdate = false;
-        scene.add(shipMesh);
+        // const shipGeometry = new THREE.ConeGeometry(1,0.5,8);
+        // shipGeometry.rotateX(Math.PI * 0.5);
+        // const shipMaterial = new THREE.MeshNormalMaterial();
+        // const shipMesh = new THREE.Mesh(shipGeometry, shipMaterial);
+        // shipMesh.matrixAutoUpdate = false;
+        // scene.add(shipMesh);
 
-        const ship = new YUKA.Vehicle();
-        ship.setRenderComponent(shipMesh, sync);
-
-        function sync(entity, rendererComponent){
-            rendererComponent.matrix.copy(entity.worldMatrix); //mesh copies all matrix calculation needed for geomtry transformations (make YUKA handle instead of THREE.js)
-        }
-
-        //create path for entity
-        const path = new YUKA.Path();
-        path.add(new YUKA.Vector3(-6, 0, 4));
-        path.add(new YUKA.Vector3(-2, 0, -4));
-        path.add(new YUKA.Vector3(8, 0, 4));
-
-        path.loop = true; //enable the ship to continue looping over the path 
-
-        ship.position.copy(path.current());//put ship at first checkpoint
-
-        //Set behaviour
-        const followPathBehavior = new YUKA.FollowPathBehavior(path, 0.5);
-        ship.steering.add(followPathBehavior);
-
-        ship.maxSpeed = 3;
-
-        const onPathBehavior = new YUKA.OnPathBehavior(path);
-        onPathBehavior.radius = 0.5;
-        ship.steering.add(onPathBehavior);
-
-        const entityManager = new YUKA.EntityManager();
-        entityManager.add(ship);
-
-        const time = new YUKA.Time();
-
-
-        //Make Path visisble
-        const position = [];
-        for(let i = 0; i < path._waypoints.length; i++){
-            const waypoint = path._waypoints[i];
-            position.push(waypoint.x, waypoint.y, waypoint.z);
-        }
-
-        const lineGeometry = new THREE.BufferGeometry();
-        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(position, 3));
-
-        const lineMaterial = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-        const lines = new THREE.LineLoop(lineGeometry, lineMaterial);
-        scene.add(lines);
-
+        
+        
         //label Renderer container
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -211,7 +266,6 @@ function Setup(){
             const intersects = raycaster.intersectObject(group);
 
             if (intersects.length > 0){
-                console.log(intersects.name);
                 switch(intersects[0].object.name){
                     case 'sphereMesh1':
                         p.className = 'tooltip hide';
@@ -239,12 +293,13 @@ function Setup(){
             window.addEventListener('click', handleClick);
         }
         
-
+        const time = new YUKA.Time();
         // Animation Loop
         const animate = () =>{
+            //console.log("animate");
             requestAnimationFrame(animate);
             const delta = time.update().getDelta();
-            entityManager.update(delta);
+            //entityManager.update(delta);
             labelRenderer.render(scene,camera);
             //controls.update();
             renderer.render(scene, camera);
@@ -284,6 +339,9 @@ function Setup(){
 
         //Cleanup
         return() => {
+            if(model){
+                scene.remove(model);
+            }
             
             
             if(canvasRef.current!==null){
@@ -306,13 +364,13 @@ function Setup(){
         
 }
 
-export default Setup
+export default Scene
 
 
 
 
         
-        //Text
+        //Textd
         // const p = document.createElement('p');
         // p.textContent = "Hello World;"
         // const cPointLabel = new CSS2DObject(p);
