@@ -43,7 +43,7 @@ function Scene(){
         setRenderer(newRenderer);
         
         return ()=> {
-            // newRenderer.dispose();
+            /// newRenderer.dispose();
             // if(box && scene && camera){
             //     scene.remove(box);
             //     scene.remove(camera);
@@ -83,7 +83,7 @@ function Scene(){
                 newBox.position.y = 10;
                 setBox(newBox);
                 if(box){
-                    scene.add(box);
+                    scene.add(newBox);
                 }
                 
                 
@@ -102,63 +102,63 @@ function Scene(){
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.update();
 
-        // //SHIP
-        // const ship = new YUKA.Vehicle();
+        //SHIP
+        const ship = new YUKA.Vehicle();
                 
-        // function sync(entity, rendererComponent){
-        //     rendererComponent.matrix.copy(entity.worldMatrix); //mesh copies all matrix calculation needed for geomtry transformations (make YUKA handle instead of THREE.js)
-        // }
+        function sync(entity, rendererComponent){
+            rendererComponent.matrix.copy(entity.worldMatrix); //mesh copies all matrix calculation needed for geomtry transformations (make YUKA handle instead of THREE.js)
+        }
 
-        // //create path for entity
-        // const path = new YUKA.Path();
-        // path.add(new YUKA.Vector3(-6, 0, 4));
-        // path.add(new YUKA.Vector3(-2, 0, -4));
-        // path.add(new YUKA.Vector3(8, 0, 4));
+        //create path for entity
+        const path = new YUKA.Path();
+        path.add(new YUKA.Vector3(-6, 0, 4));
+        path.add(new YUKA.Vector3(-2, 0, -4));
+        path.add(new YUKA.Vector3(8, 0, 4));
 
-        // path.loop = true; //enable the ship to continue looping over the path 
+        path.loop = true; //enable the ship to continue looping over the path 
 
-        // ship.position.copy(path.current());//put ship at first checkpoint
+        ship.position.copy(path.current());//put ship at first checkpoint
 
-        // const loader = new GLTFLoader();
-        // loader.load('./assets/rocket.glb', function(glb){
-        //     scene.add( glb.scene );
-        //     const model = glb.scene;
+        const loader = new GLTFLoader();
+        loader.load('./assets/rocket.glb', function(glb){
+            scene.add( glb.scene );
+            const model = glb.scene;
 
-        //     setModel(model);
-        //     scene.add(model);
-        //     model.matrixAutoUpdate = false;
-        //     //ship.scale = new YUKA.Vector3(0.5,0.5,0.5);
-        //     ship.setRenderComponent(model, sync);
-        // });
+            setModel(model);
+            scene.add(model);
+            model.matrixAutoUpdate = false;
+            //ship.scale = new YUKA.Vector3(0.5,0.5,0.5);
+            ship.setRenderComponent(model, sync);
+        });
 
-        // //Set behaviour
-        // const followPathBehavior = new YUKA.FollowPathBehavior(path, 3);
-        // ship.steering.add(followPathBehavior);
+        //Set behaviour
+        const followPathBehavior = new YUKA.FollowPathBehavior(path, 3);
+        ship.steering.add(followPathBehavior);
 
-        // ship.maxSpeed = 3;
+        ship.maxSpeed = 3;
 
-        // const onPathBehavior = new YUKA.OnPathBehavior(path);
-        // onPathBehavior.radius = 0.5;
-        // ship.steering.add(onPathBehavior);
+        const onPathBehavior = new YUKA.OnPathBehavior(path);
+        onPathBehavior.radius = 0.5;
+        ship.steering.add(onPathBehavior);
 
-        // const entityManager = new YUKA.EntityManager();
-        // entityManager.add(ship);
+        const entityManager = new YUKA.EntityManager();
+        entityManager.add(ship);
 
-        // //Make Path visisble
-        // const position = [];
-        // for(let i = 0; i < path._waypoints.length; i++){
-        //     const waypoint = path._waypoints[i];
-        //     position.push(waypoint.x, waypoint.y, waypoint.z);
-        // }
+        //Make Path visisble
+        const position = [];
+        for(let i = 0; i < path._waypoints.length; i++){
+            const waypoint = path._waypoints[i];
+            position.push(waypoint.x, waypoint.y, waypoint.z);
+        }
 
-        // const lineGeometry = new THREE.BufferGeometry();
-        // lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(position, 3));
+        const lineGeometry = new THREE.BufferGeometry();
+        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(position, 3));
 
-        // const lineMaterial = new THREE.LineBasicMaterial({color: 0x000000F});
-        // const lines = new THREE.LineLoop(lineGeometry, lineMaterial);
-        // scene.add(lines);
+        const lineMaterial = new THREE.LineBasicMaterial({color: 0x000000F});
+        const lines = new THREE.LineLoop(lineGeometry, lineMaterial);
+        scene.add(lines);
 
-        // //renderer.render(scene, camera); //need to change this
+        //renderer.render(scene, camera); //need to change this
 
 
         
@@ -296,10 +296,9 @@ function Scene(){
         const time = new YUKA.Time();
         // Animation Loop
         const animate = () =>{
-            //console.log("animate");
             requestAnimationFrame(animate);
             const delta = time.update().getDelta();
-            //entityManager.update(delta);
+            entityManager.update(delta);
             labelRenderer.render(scene,camera);
             //controls.update();
             renderer.render(scene, camera);
