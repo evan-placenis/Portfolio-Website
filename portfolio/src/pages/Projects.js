@@ -1,4 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
+import test from '../images/bg3.jpg';
+import test2 from '../images/sky.jpg';
+import test3 from '../images/t.png';
+import food101 from '../images/food101.jpg'
+import twitter from '../images/twitter.webp'
+import bitcoin from '../images/bitcoin.avif'
 function Projects(){
     useEffect(()=>{
         if(!window) return;
@@ -23,17 +29,53 @@ function Projects(){
         }
     }, []);
 
+    function setScrollVar(){
+        const htmlElement = document.documentElement
+        const percentOfScreenHeightScrolled = htmlElement.scrollTop /
+        htmlElement.clientHeight
+        console.log(Math.min(percentOfScreenHeightScrolled * 100, 100))
+        htmlElement.style.setProperty("--scroll", Math.min(percentOfScreenHeightScrolled * 100, 100))
+    }
+    window.addEventListener("scroll", setScrollVar)
+    window.addEventListener("resize", setScrollVar) //reset size of window when resized
+    setScrollVar()//handle page refresh
+
+    useEffect(() => {
+        const oberver = new IntersectionObserver(entries =>{
+            for (let i = entries.length - 1; i >= 0; i--){
+                const entry = entries[i]
+                //if its on the page
+                if(entry.isIntersecting){
+                    document.querySelectorAll("[data-img]").forEach(img =>{
+                        img.classList.remove("show")
+                    })
+                    const img = document.querySelector(entry.target.dataset.imgToShow)
+                    img?.classList.add("show")
+                    break
+                }
+            }
+        })
+    
+        document.querySelectorAll("[data-img-to-show]").forEach(section =>{
+            oberver.observe(section)
+        })
+    
+    }, []);
+      
+    
+
+
     return(
         <div class = "grid md:grid-cols-6 ">   
             {/* Navigation*/}
-            <div class = "bg-white md:col-span-1 flex justify-center md: justify-end">
-                <nav class="text-right">
+            <div class = " bg-white md:col-span-1 flex justify-center md: justify-end">
+                <nav class="  sticky top-0 text-left">
                     <div class = "flex justify-between items-center">
                         {/* Make this someting to toggle?*/}
                        
-                        <h1 class = "font-bold uppercase p-4 border-b-gray-100">
+                        <p class = "font-bold uppercase p-4 border-b-gray-100">
                             Evan Placenis
-                        </h1>
+                        </p>
                         <div class = "px-1 cursor-pointer md:hidden" id = "dropDown">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -80,80 +122,266 @@ function Projects(){
                 </nav>
             </div>
             
-            {/* Title and paragraph*/}
-            <div class = "bg-gray-100 md:col-span-5">
-                <div class = "flex-justify-around flex items-center px-2 py-6 xs:px-2 sm:px-4 md:px-8 lg:px-16">
-                    <h1 class = "flex justify-start font-bold border-b border-gray-200 pb-2 mt-12 text-4xl">Projects</h1>
-                    <div class = "flex items-end mt-8 pl-5">
-                        <div class = "bg-red-500 h-4 w-4"></div>
-                        <div class = "bg-blue-500 h-6 w-4"></div>
-                        <div class = "bg-green-500 h-9 w-4"></div>
+                
+            <body class = "md:col-span-5">
+                {/* Each of the imges that will be shown */}
+                <div className = "imgs">
+                    <div data-img id = "img-1" className = "top-section-img show"> {/* className = "top-section-img show" */}
+                        <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={food101} alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Food Vision</span>
+                                    <span class="block text-gray-500 text-sm">Image Classification with 95% accuracy on 101 different types of food</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={twitter} alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Tweet Checker</span>
+                                    <span class="block text-gray-500 text-sm">Sentiment Analysis on Tweets trained on</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={bitcoin} alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Bit Predict</span>
+                                    <span class="block text-gray-500 text-sm">Time Series Forcast Models on the price of bitcoin</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
                     
+                    <div data-img id = "img-2" className = "top-section-img">
+                        <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    <div data-img id = "img-3" className = "top-section-img">
+                        <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 
-                <p class = "flex justify-center">
-                    Testing out the paragaph
-                </p>
-                
 
-                {/* Cards for projects*/}
-                <div class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
-                    <div class = "bg-white hover:bg-gray-200 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                        <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
-                        <div class="m-4">
-                            <span class="font-bold">Name of projects</span>
-                            <span class="block text-gray-500 text-sm">Description of project</span>
-                        </div>
-                        {/* icon*/}
-                        <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                        </svg>
-                        <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
-                            <span>Python</span>
-                        </div>
-                    </div>
+                    <div data-img id = "img-4" className = "top-section-img">
+                        <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
 
-                    <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                        <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
-                        <div class="m-4">
-                            <span class="font-bold">Name of projects</span>
-                            <span class="block text-gray-500 text-sm">Description of project</span>
-                        </div>
-                        {/* icon*/}
-                        <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                        </svg>
-                        <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
-                            <span>Python</span>
-                        </div>
-                    </div>
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
 
-                    <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                        <img src="../images/bg3.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
-                        <div class="m-4">
-                            <span class="font-bold">Name of projects</span>
-                            <span class="block text-gray-500 text-sm">Description of project</span>
-                        </div>
-                        <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
-                            <span>Python</span>
-                        </div>
-                    </div>
-
-                    <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                        <img src="" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
-                        <div class="m-4">
-                            <span class="font-bold">Name of projects</span>
-                            <span class="block text-gray-500 text-sm">Description of project</span>
-                        </div>
-                        <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
-                            <span>Python</span>
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Name of projects</span>
+                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                </div>
+                                {/* icon*/}
+                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
 
-            </div>
+
+                {/* Title and paragraph*/}
+                <section className = "top-section full-screen-section">
+                    <div class="left">
+                        <h1>Projects</h1>
+                        <p>
+                            Testing out Paragraph
+                        </p>
+                    </div>
+                    {/* <div className = "left">
+                        <div class = "flex-justify-around flex items-center px-2 py-6 xs:px-2 sm:px-4 md:px-8 lg:px-16">
+                            <h1 class = "flex justify-start font-bold border-b border-gray-200 pb-2 mt-12 text-4xl">Projects</h1>
+                            <div class = "flex items-end mt-8 pl-5">
+                                <div class = "bg-red-500 h-4 w-4"></div>
+                                <div class = "bg-blue-500 h-6 w-4"></div>
+                                <div class = "bg-green-500 h-9 w-4"></div>
+                            </div>
+                        </div>
+                            
+                        
+                        <p class = "flex justify-center">
+                            Testing out the paragaph
+                        </p>
+                    </div> */}
+                    <div class="right"></div>
+                </section>
+
+                
+                {/* Content on each page*/}    
+                <section className = "full-screen-section ">
+                    <h1> Artifical Intelligence</h1>
+                    <p>...</p>
+                    <div data-img-to-show = "#img-1"></div>
+                </section>
+
+                <section className = "full-screen-section">
+                    <h1> Web Development </h1>
+                    <p>...</p>
+                    <div data-img-to-show = "#img-2"></div>
+                </section>
+                {/*  Web Development Continued */}
+                <section className = "full-screen-section">
+                    {/* <h1>  </h1> */}
+                    <p>Web Development Continued</p>
+                    <div data-img-to-show = "#img-3"></div>
+                </section>
+
+                <section className = "full-screen-section">
+                    <h1> Additional Projects </h1>
+                    <p>...</p>
+                    <div data-img-to-show = "#img-4"></div>
+                </section>
+                    
+            </body>
+            
+            
         </div>
     
     );
@@ -182,3 +410,64 @@ export default Projects
     // <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
     // <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
     // </svg>
+
+
+
+
+
+    
+                // {/* Cards for projects*/}
+                // <div class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
+                //     <div class = "bg-white hover:bg-gray-200 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                //         <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                //         <div class="m-4">
+                //             <span class="font-bold">Name of projects</span>
+                //             <span class="block text-gray-500 text-sm">Description of project</span>
+                //         </div>
+                //         {/* icon*/}
+                //         <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                //             <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                //         </svg>
+                //         <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                //             <span>Python</span>
+                //         </div>
+                //     </div>
+
+                    // <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                    //     <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                    //     <div class="m-4">
+                    //         <span class="font-bold">Name of projects</span>
+                    //         <span class="block text-gray-500 text-sm">Description of project</span>
+                    //     </div>
+                    //     {/* icon*/}
+                    //     <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    //         <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                    //     </svg>
+                    //     <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                    //         <span>Python</span>
+                    //     </div>
+                    // </div>
+
+                //     <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                //         <img src="../images/bg3.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                //         <div class="m-4">
+                //             <span class="font-bold">Name of projects</span>
+                //             <span class="block text-gray-500 text-sm">Description of project</span>
+                //         </div>
+                //         <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                //             <span>Python</span>
+                //         </div>
+                //     </div>
+
+                //     <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                //         <img src="" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                //         <div class="m-4">
+                //             <span class="font-bold">Name of projects</span>
+                //             <span class="block text-gray-500 text-sm">Description of project</span>
+                //         </div>
+                //         <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                //             <span>Python</span>
+                //         </div>
+                //     </div>
+                // </div>
+                
