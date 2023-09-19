@@ -4,15 +4,20 @@
 
 body {
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'system-ui', sans-serif;
     color: #141616;
-    background-color: #e6e9ea;
+    background-color: #edf2f3; 
     font-size: 28px;
 }
-
+/* e6e9ea */
+p {
+    color: #141616;
+}
 
 h1{
     font-size: 110px;
+    color: #4bbcdc;
+    font-family: 'Georgia', sans-serif;
     margin-bottom:1rem;
 }
 
@@ -52,9 +57,11 @@ h1{
 
 .full-screen-section {
     height: 100vh;
-    text-align: center;
+    width: 100%;
+    text-align: left;
     padding: 1rem;
     position: relative;
+     
 }
 
 .top-section .left,
@@ -67,7 +74,7 @@ h1{
 
 
 .top-section .left {
-background-color: rgb(248, 250, 249, var(--background-opacity));
+    background-color: rgb(248, 250, 249, var(--background-opacity));
 }
 
 .top-section .right {
@@ -92,8 +99,9 @@ background: linear-gradient(
     --background-opacity: calc(100% - 1% * min(var(--scroll), 30) * 100 / 30);
 }
 
-
-
+.vanish-letter {
+    color: #eff0f0 /* Change the color to your desired color */
+}
 
 .first-main-section {
 padding-top: 10vh;

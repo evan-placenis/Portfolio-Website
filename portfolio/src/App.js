@@ -1,10 +1,9 @@
 import './App.css';
-import Setup from './components/Setup';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Projects from './pages/Projects';
-import Skills from './pages/Skills';
+import Contact from './pages/Contact';
 import About from './pages/About';
-import Scene from './components/Scene';
+import Banner from './components/Banner'
 function App() {
   //setup scene, camera, renderer
   // const scene = new THREE.Scene();
@@ -13,14 +12,15 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-            <Route path = '/' element = {<Setup />}/>
-
-            <Route path = '/Projects' element = {<Projects/>}/>
-            <Route path = '/Skills' element = {<Skills/>}/>
-            <Route path = '/About' element = {<About/>}/>
-        </Routes>
-      
+        <Banner>
+          <Routes>
+                {/* <Route path = '/' element = {<Setup />}/> */}
+                <Route path = '' element = {<Projects/>}/>
+                <Route path = '/About' element = {<About/>}/>
+                <Route path = '/Contact' element = {<Contact/>}/>
+                
+            </Routes>
+        </Banner>
       </BrowserRouter>
       
     </div>

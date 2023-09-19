@@ -1,39 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react';
-import test from '../images/bg3.jpg';
-import test2 from '../images/sky.jpg';
-import test3 from '../images/t.png';
+import React, {useEffect} from 'react';
 import food101 from '../images/food101.jpg'
 import twitter from '../images/twitter.webp'
 import bitcoin from '../images/bitcoin.avif'
+import qa from '../images/QA.png'
+import summary from '../images/summary.png'
+import generation from '../images/generation.png'
+import space from '../images/space.png'
+import snake from '../images/snake.png'
+import robo from '../images/robo.png'
+import pattern from '../images/pattern.png'
+import balance from '../images/balance.jfif'
+import face from '../images/face.jfif'
+import WGAN from '../images/WGAN.png'
+import VAE from '../images/VAE.jfif'
+import diffusion from '../images/diffusion.jfif'
 function Projects(){
-    useEffect(()=>{
-        if(!window) return;
-            const dropDown = document.querySelector('#dropDown');
-            const menu = document.querySelector('#menu');
-            
-            function handleClick(){
-                if(menu.classList.contains('hidden')){
-                    menu.classList.remove('hidden');
-                }else{
-                    menu.classList.add('hidden');
-                }
-            }
-
-            dropDown.addEventListener('click', handleClick);
-        
-        
-        return() => {
-            if (window !== null) {
-                dropDown.removeEventListener('click', handleClick);
-              }
-        }
-    }, []);
 
     function setScrollVar(){
         const htmlElement = document.documentElement
         const percentOfScreenHeightScrolled = htmlElement.scrollTop /
         htmlElement.clientHeight
-        console.log(Math.min(percentOfScreenHeightScrolled * 100, 100))
         htmlElement.style.setProperty("--scroll", Math.min(percentOfScreenHeightScrolled * 100, 100))
     }
     window.addEventListener("scroll", setScrollVar)
@@ -66,157 +52,115 @@ function Projects(){
 
 
     return(
-        <div class = "grid md:grid-cols-6 ">   
-            {/* Navigation*/}
-            <div class = " bg-white md:col-span-1 flex justify-center md: justify-end">
-                <nav class="  sticky top-0 text-left">
-                    <div class = "flex justify-between items-center">
-                        {/* Make this someting to toggle?*/}
-                       
-                        <p class = "font-bold uppercase p-4 border-b-gray-100">
-                            Evan Placenis
-                        </p>
-                        <div class = "px-1 cursor-pointer md:hidden" id = "dropDown">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                        </div>
-                    </div>
-                    <ul class= "mt-6 hidden md:block" id = "menu">
-                        <li class = "text-gray-700 font-bold py-1">
-                            <a href = "/" class = "px-4 flex justify-center md:justify-end">
-                                <span class = "mr-4">Home</span>
-                                <svg class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                                </svg>
-
-                            </a>
-                        </li>
-                        <li class = "py-1">
-                            <a href = "#" class = "px-4 flex justify-center md:justify-end">
-                                <span class = "mr-4">Projects</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                                </svg>
-
-                            </a>
-                        </li>
-                        <li class = "py-1">
-                            <a href = "/About" class = "px-4 flex justify-center md:justify-end">
-                                <span class = "mr-4">About</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                                </svg>
-                            </a>
-                        </li>
-                        <li class = "py-1">
-                            <a href = "#" class = "px-4 flex justify-center md:justify-end">
-                                <span class = "mr-4" >Contact</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
-                                </svg>
-
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            
+        <div class = "grid md:grid-cols-6 ">               
                 
             <body class = "md:col-span-5">
                 {/* Each of the imges that will be shown */}
                 <div className = "imgs">
-                    <div data-img id = "img-1" className = "top-section-img show"> {/* className = "top-section-img show" */}
+
+                    <div data-img id = "img-1" className = "top-section-img show">
                         <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src={food101} alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={WGAN} class = "w-64 h-32 sm:h-48 object-cover mx-auto"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Food Vision</span>
-                                    <span class="block text-gray-500 text-sm">Image Classification with 95% accuracy on 101 different types of food</span>
+                                    <span class="font-bold">WGAN</span>
+                                    <span class="block text-gray-500 text-sm">Utilized the Wasserstein loss function in a GAN. The generator and discriminator are trained simultaneously to generate images of Lego blocks.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
 
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src={twitter} alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={diffusion}  class = "w-64 mx-auto h-32 sm:h-48 object-cover"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Tweet Checker</span>
-                                    <span class="block text-gray-500 text-sm">Sentiment Analysis on Tweets trained on</span>
+                                    <span class="font-bold">Diffusion Model</span>
+                                    <span class="block text-gray-500 text-sm">Designed a denoising diffusion model to generate realistic images of flowers using a U-Net. </span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/Denoising_Diffusion_Generative_Model">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
 
-                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src={bitcoin} alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                            <div class = " bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={VAE}class = "w-64 mx-auto h-32 sm:h-48 object-cover"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Bit Predict</span>
-                                    <span class="block text-gray-500 text-sm">Time Series Forcast Models on the price of bitcoin</span>
+                                    <span class="font-bold">Variational Auto Encoder</span>
+                                    <span class="block text-gray-500 text-sm">Created a VAE to map high-dimensional images into a low-dimensional latent space to sample from this latent space and generate new images of clothes.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/Generative-Variational-Auto-Encoder">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div data-img id = "img-2" className = "top-section-img">
                         <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={qa}class = "w-64 h-32 sm:h-48 object-cover mx-auto"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">Question Answering Bot</span>
+                                    <span class="block text-gray-500 text-sm">Created an extractive QA model using Haystack to create a BM25 retriever and FARM reader to answer questions related to electronic products.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/Transformer_Question_Answering">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
 
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={summary} class = "w-64 h-32 sm:h-48 object-cover mx-auto"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">Text Summarizing AI</span>
+                                    <span class="block text-gray-500 text-sm">Used the pretrained Google transformer PEGASUS and fine-tuned it on SAMSum, a new domain it was not trained on, to evaluate its summarization capabilities.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/Transformer-Text-Summarization">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
 
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={generation} class = "w-full h-32 sm:h-48 object-cover"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">Text Generating AI</span>
+                                    <span class="block text-gray-500 text-sm">Utilized the pretrained transformers Bart (Facebook) and Pegasus (Google) to fine tuned each LLM on a new domain and evaluate thier text generation strengths and weaknesses</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/Pretrained-Transformer-Text-Generation">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
@@ -224,102 +168,166 @@ function Projects(){
                         </div>
                     </div>
                     
-
-
                     <div data-img id = "img-3" className = "top-section-img">
                         <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={food101}  class = "w-64 h-32 sm:h-48 object-cover mx-auto"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">Food Vision</span>
+                                    <span class="block text-gray-500 text-sm"> Trained an Image Classification CNN model with 80% accuracy on 101 different types of food.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/FoodVision">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
 
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={twitter} class = "w-64 h-32 sm:h-48 object-cover mx-auto"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">Tweet Checker</span>
+                                    <span class="block text-gray-500 text-sm">Created a sentiment analysis NLP model trained to determine the overall sentiment of tweets, achieving 90% accuracy.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis?tab=repositories">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
 
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={bitcoin} class = "w-64 h-32 sm:h-48 object-cover mx-auto"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">Bit Predict</span>
+                                    <span class="block text-gray-500 text-sm">Trained a Time Series RNN model to predict the price of bitcoin in the future.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/Time_Series">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                
-
+                    
                     <div data-img id = "img-4" className = "top-section-img">
                         <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
                             <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <img src={space} class = "w-full h-32 sm:h-48 object-cover"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">3D-Space</span>
+                                    <span class="block text-gray-500 text-sm">Utilized THREE.js to create an interactive 3D Space website.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
+                                <a href = "https://github.com/evan-placenis/3D-Space">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
+                                <div class = "bg-orange-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>THREE.js</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={snake} class = "w-84 h-32 sm:h-48 object-cover mx-auto"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Snake</span>
+                                    <span class="block text-gray-500 text-sm">Recreated a childhood favorite webiste game with javascript, this time, with different difficulty levels!</span>
+                                </div>
+                                {/* icon*/}
+                                <a href = "https://github.com/evan-placenis/Snake">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
+                                <div class = "bg-orange-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>javascript</span>
+                                </div>
+                            </div>
+
+                            <div class = " bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={robo} class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">RoboFriends</span>
+                                    <span class="block text-gray-500 text-sm">A responsive website that displays robots and their information. The user can search for a specific robot and the display will update real time</span>
+                                </div>
+                                {/* icon*/}
+                                <a href = "https://github.com/evan-placenis/RoboFriendsWeb">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
+                                <div class = "bg-orange-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Javascript</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>           
+
+                    <div data-img id = "img-6" className = "top-section-img">
+                        <div  class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={pattern}class = "w-full h-32 sm:h-48 object-cover"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Design Pattern Mastery</span>
+                                    <span class="block text-gray-500 text-sm">A quest to implement all 24 design patterns from the legendary book of patterns written by the gang of 4 </span>
+                                </div>
+                                {/* icon*/}
+                                <a href = "https://github.com/stars/evan-placenis/lists/design-patterns">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
+                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>Python/Java</span>
+                                </div>
+                            </div>
+
+                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={balance} class = "w-64 h-32 sm:h-48 object-cover mx-auto"></img>
+                                <div class="m-4">
+                                    <span class="font-bold">Balance Beams</span>
+                                    <span class="block text-gray-500 text-sm">Explored OpenAI gym and created a Reinforcement learning algorithm to train the sprite to learn to balance a pole through trial and error!</span>
+                                </div>
+                                {/* icon*/}
+                                <a href = "https://github.com/evan-placenis/a-OpenAI-Gym">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
                                 <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
                                     <span>Python</span>
                                 </div>
                             </div>
 
-                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                            <div class = " bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
+                                <img src={face} class = "w-full h-32 sm:h-48 object-cover"></img>
                                 <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
+                                    <span class="font-bold">Face Finder</span>
+                                    <span class="block text-gray-500 text-sm">A full stack website developed through the ZTM Web Development course that allows users to login to an account and upload picutures. The website utilizes a Clarifai API behind the scenes to use AI to detect the faces in the photos.</span>
                                 </div>
                                 {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
-                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
-                                    <span>Python</span>
-                                </div>
-                            </div>
-
-                            <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                                <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
-                                <div class="m-4">
-                                    <span class="font-bold">Name of projects</span>
-                                    <span class="block text-gray-500 text-sm">Description of project</span>
-                                </div>
-                                {/* icon*/}
-                                <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                                </svg>
-                                <div class = "bg-green-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
-                                    <span>Python</span>
+                                <a href = "https://github.com/evan-placenis/face_recognition">
+                                    <svg class = "w-5 mr-2 inline-block absolute top-0 right-0 mt-2 cursor-pointer hover:text-white"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                </a>
+                                <div class = "bg-orange-100 text-secondary-200 text-xs uppercase font-bold rounded-full absolute top-0 ml-2 mt-2">
+                                    <span>javascript</span>
                                 </div>
                             </div>
                         </div>
@@ -328,59 +336,94 @@ function Projects(){
 
 
                 {/* Title and paragraph*/}
-                <section className = "top-section full-screen-section">
+                <section className = "top-section full-screen-section" >
                     <div class="left">
                         <h1>Projects</h1>
                         <p>
-                            Testing out Paragraph
+                            All projects can be found on <a href="https://github.com/evan-placenis?tab=repositories" class = "font-bold underline">Github</a>
                         </p>
                     </div>
-                    {/* <div className = "left">
-                        <div class = "flex-justify-around flex items-center px-2 py-6 xs:px-2 sm:px-4 md:px-8 lg:px-16">
-                            <h1 class = "flex justify-start font-bold border-b border-gray-200 pb-2 mt-12 text-4xl">Projects</h1>
-                            <div class = "flex items-end mt-8 pl-5">
-                                <div class = "bg-red-500 h-4 w-4"></div>
-                                <div class = "bg-blue-500 h-6 w-4"></div>
-                                <div class = "bg-green-500 h-9 w-4"></div>
-                            </div>
-                        </div>
-                            
-                        
-                        <p class = "flex justify-center">
-                            Testing out the paragaph
-                        </p>
-                    </div> */}
-                    <div class="right"></div>
                 </section>
 
                 
-                {/* Content on each page*/}    
-                <section className = "full-screen-section ">
-                    <h1> Artifical Intelligence</h1>
-                    <p>...</p>
+                {/* Content on each page*/}
+              
+                
+                <section className = "full-screen-section">
+                    <h1 class = "text-6xl lg:hidden"> 
+                        Generative
+                        <span class="vanish-letter">_</span>
+                        AI
+                    </h1> 
+
+                    <h1 class="hidden lg:block">
+                        Generative
+                        <span class="vanish-letter">_</span>
+                        AI
+                    </h1> 
                     <div data-img-to-show = "#img-1"></div>
                 </section>
 
-                <section className = "full-screen-section">
-                    <h1> Web Development </h1>
-                    <p>...</p>
+                <section className = "full-screen-section ">
+
+                    <h1 class = "text-6xl lg:hidden"> 
+                        Transformers
+                    </h1> 
+
+                    <h1 class="hidden lg:block text-8xl"> 
+                        NLP
+                        <span class="vanish-letter">l</span> 
+                        Using
+                        <span class="vanish-letter">l</span>
+                        Transformers
+                    </h1>
                     <div data-img-to-show = "#img-2"></div>
                 </section>
-                {/*  Web Development Continued */}
-                <section className = "full-screen-section">
-                    {/* <h1>  </h1> */}
-                    <p>Web Development Continued</p>
+
+                <section className = "full-screen-section ">
+                    <h1 class="text-6xl lg:hidden">
+                        Classification 
+                        <span class="vanish-letter">_</span>
+                        AI
+                    </h1>
+
+                    <h1 class="hidden lg:block">
+                        Classification 
+                        <span class="vanish-letter">_</span>
+                        AI
+                    </h1>
                     <div data-img-to-show = "#img-3"></div>
                 </section>
 
                 <section className = "full-screen-section">
-                    <h1> Additional Projects </h1>
-                    <p>...</p>
+                    <h1 class="text-5xl lg:hidden">
+                        Web 
+                        <span class="vanish-letter">l</span>
+                        Development
+                    </h1>
+                    <h1 class="hidden lg:block text-8xl">
+                        Web 
+                        <span class="vanish-letter">l</span>
+                        Development
+                    </h1>
                     <div data-img-to-show = "#img-4"></div>
+                </section>
+
+                <section className = "full-screen-section">
+                    <h1 class="text-5xl lg:hidden"> 
+                        Additional 
+                        <span class="vanish-letter">l</span>
+                        Projects 
+                    </h1>
+                    <h1 class="hidden lg:block text-8xl"> 
+                        Additional 
+                        <span class="vanish-letter">l</span>
+                        Projects 
+                    </h1>
+                    <div data-img-to-show = "#img-6"></div>
                 </section>
                     
             </body>
-            
             
         </div>
     
@@ -419,7 +462,7 @@ export default Projects
                 // {/* Cards for projects*/}
                 // <div class = "mt-8 grid lg:grid-cols-3 gap-10 mx-10">
                 //     <div class = "bg-white hover:bg-gray-200 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                //         <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                //         <img src="test.jpg" class = "w-full h-32 sm:h-48 object-cover"></img>
                 //         <div class="m-4">
                 //             <span class="font-bold">Name of projects</span>
                 //             <span class="block text-gray-500 text-sm">Description of project</span>
@@ -434,7 +477,7 @@ export default Projects
                 //     </div>
 
                     // <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                    //     <img src="test.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                    //     <img src="test.jpg" class = "w-full h-32 sm:h-48 object-cover"></img>
                     //     <div class="m-4">
                     //         <span class="font-bold">Name of projects</span>
                     //         <span class="block text-gray-500 text-sm">Description of project</span>
@@ -449,7 +492,7 @@ export default Projects
                     // </div>
 
                 //     <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                //         <img src="../images/bg3.jpg" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                //         <img src="../images/bg3.jpg" class = "w-full h-32 sm:h-48 object-cover"></img>
                 //         <div class="m-4">
                 //             <span class="font-bold">Name of projects</span>
                 //             <span class="block text-gray-500 text-sm">Description of project</span>
@@ -460,7 +503,7 @@ export default Projects
                 //     </div>
 
                 //     <div class = "bg-white hover:bg-gray-200 hover:scale-105 hover:shadow-xl rounded overflow-hidden shadow-md relative">
-                //         <img src="" alt="test" class = "w-full h-32 sm:h-48 object-cover"></img>
+                //         <img src="" class = "w-full h-32 sm:h-48 object-cover"></img>
                 //         <div class="m-4">
                 //             <span class="font-bold">Name of projects</span>
                 //             <span class="block text-gray-500 text-sm">Description of project</span>
